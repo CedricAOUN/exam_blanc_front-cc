@@ -5,6 +5,7 @@ import api from "../api";
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,6 +17,7 @@ const Login = ({ onLogin }) => {
       navigate("/tasks");
     } catch (err) {
       console.error("Login failed", err);
+      setError(err?.response?.data?.msg); // Stocker l'erreur dans un etat pour l'afficher en dessous du formulaire.
     }
   };
 
@@ -39,6 +41,7 @@ const Login = ({ onLogin }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        {error && <p style={{ color: 'red', width: '100%', textAlign: 'center' }}>{error}</p>}
         <button type="submit" className="btn">
           Login
         </button>
